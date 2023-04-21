@@ -98,3 +98,37 @@ context('Autobahn Sign Up Page : Verify Elements are Present', () => {
     });
   
   })
+
+  context('Autobahn Sign Up Page : Test Email Field', () => {
+    beforeEach(() => {
+      cy.visit('https://autobahn.security/signup')
+    })
+  
+    it('Verify Email Format Must be Valid : Without @', function() {
+      cy.get('.form-group > .active').click();
+      cy.get('.form-group > .active').type(data.credentials.dummy_email_no_extention.email); // email without @bugfoo.com
+      cy.get('.input-group-icon > .form-control').click();
+      cy.get('.input-group-icon > .form-control').type(data.credentials.dummy_email_no_extention.password);
+      cy.get('.error > .label').should('have.text', 'Must be a valid email');
+      cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+    });
+  
+    it('Verify Email Format Must be Valid : With Space', function() {
+      cy.get('.form-group > .active').click();
+      cy.get('.form-group > .active').type(data.credentials.dummy_email_with_space.email); // email with space
+      cy.get('.input-group-icon > .form-control').click();
+      cy.get('.input-group-icon > .form-control').type(data.credentials.dummy_email_with_space.password);
+      cy.get('.error > .label').should('have.text', 'Must be a valid email');
+      cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+    });
+  
+    it('Verify Email Format Must be Valid : With Wrong Email', function() {
+      cy.get('.form-group > .active').click();
+      cy.get('.form-group > .active').type(data.credentials.dummy_wrong_email.email); // with wrong email
+      cy.get('.input-group-icon > .form-control').click();
+      cy.get('.input-group-icon > .form-control').type(data.credentials.dummy_wrong_email.password);
+      cy.get('.button-wrapper > .custom-button > .btn > .button-text').click();
+      cy.get('.error > .label', { timeout: 20000 }).should('have.text', 'Email domain is not allowed. You must use a company email.');
+    });
+  
+  })
