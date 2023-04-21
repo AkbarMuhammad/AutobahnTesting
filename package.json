@@ -1,0 +1,25 @@
+{
+  "name": "autobahn-testing",
+  "version": "1.0.0",
+  "description": "written by Akbar for Autobahn Testing Sign Up Page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkbarMuhammad/autobahn-testing.git"
+  },
+  "keywords": [
+    "autobahn"
+  ],
+  "author": "Akbar Muhammad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AkbarMuhammad/autobahn-testing/issues"
+  },
+  "homepage": "https://github.com/AkbarMuhammad/autobahn-testing#readme",
+  "devDependencies": {
+    "cypress": "^12.10.0"
+  }
+}
