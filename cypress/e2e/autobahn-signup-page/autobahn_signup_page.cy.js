@@ -42,3 +42,59 @@ context('Autobahn Sign Up Page : Verify Elements are Present', () => {
     });
   
   })
+
+  context('Autobahn Sign Up Page : Happy Path', () => { // Account Exist
+    beforeEach(() => {
+      cy.visit('https://autobahn.security/signup')
+    })
+  
+    it('SignUp Happy Path : Account 1', function() {
+      cy.get('.active > .form-control').click();
+      cy.get('.active > .form-control').type(data.credentials.valid_account_1.email);
+      cy.get('.input-group-icon > .form-control').click();
+      cy.get('.bar-text').should('have.text', 'Weak');
+      cy.get('.double-columns > :nth-child(1)').should('have.text', '\n                        At least 8 characters\n                ');
+      cy.get('.double-columns > :nth-child(2)').should('have.text', '\n                        One uppercase letter\n                ');
+      cy.get('.double-columns > :nth-child(3)').should('have.text', '\n                        One lowercase letter\n                ');
+      cy.get('.double-columns > :nth-child(4)').should('have.text', '\n                        One number\n                ');
+      cy.get('.double-columns > :nth-child(5)').should('have.text', '\n                        One special character\n                ');
+      cy.get('.double-columns > :nth-child(6)').should('have.text', '\n                        No empty space\n                ');
+      cy.get('.input-group-icon > .form-control').type(data.credentials.valid_account_1.password);
+      cy.get('.bar').should('have.text', 'Very Strong');
+      cy.get('.button-wrapper > .custom-button > .btn > .button-text').click();
+      cy.get('.spinner > .fa').should('be.visible');
+      cy.get('.error > .label', { timeout: 20000 }).should('have.text', 'Account already exists.');
+    });
+  
+    it('SignUp Happy Path : Account 2 - Welcome!', function() {
+      cy.get('.active > .form-control').click();
+      cy.get('.active > .form-control').type(data.credentials.valid_account_2.email);
+      cy.get('.input-group-icon > .form-control').click();
+      cy.get('.bar-text').should('have.text', 'Weak');
+      cy.get('.double-columns > :nth-child(1)').should('have.text', '\n                        At least 8 characters\n                ');
+      cy.get('.double-columns > :nth-child(2)').should('have.text', '\n                        One uppercase letter\n                ');
+      cy.get('.double-columns > :nth-child(3)').should('have.text', '\n                        One lowercase letter\n                ');
+      cy.get('.double-columns > :nth-child(4)').should('have.text', '\n                        One number\n                ');
+      cy.get('.double-columns > :nth-child(5)').should('have.text', '\n                        One special character\n                ');
+      cy.get('.double-columns > :nth-child(6)').should('have.text', '\n                        No empty space\n                ');
+      cy.get('.input-group-icon > .form-control').type(data.credentials.valid_account_2.password);
+      cy.get('.bar').should('have.text', 'Strong');
+      cy.get('.button-wrapper > .custom-button > .btn > .button-text').click();
+      cy.get('.spinner > .fa').should('be.visible');
+      cy.get('.v2 > .heading', { timeout: 20000 }).should('have.text', 'Welcome!');
+      cy.get('.button-wrapper > .custom-button').should('have.text', ' Start using Autobahn');
+    });
+  
+    it('Verify Password Eye Slash', function() {
+      cy.get('.active > .form-control').click();
+      cy.get('.active > .form-control').type(data.credentials.valid_account_1.email);
+      cy.get('.input-group-icon > .form-control').click();
+      cy.get('.input-group-icon > .form-control').type(data.credentials.valid_account_1.password);
+      cy.get('.input-group-icon > .fa').should('have.class', 'fa-eye');
+      cy.get('.input-group-icon > .fa').click();
+      cy.get('.input-group-icon > .fa').should('have.class', 'fa-eye-slash');
+      cy.get('.input-group-icon > .fa').click();
+      cy.get('.input-group-icon > .fa').should('have.class', 'fa-eye');
+    });
+  
+  })
