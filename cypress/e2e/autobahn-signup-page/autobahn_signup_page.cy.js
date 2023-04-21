@@ -132,3 +132,121 @@ context('Autobahn Sign Up Page : Verify Elements are Present', () => {
     });
   
   })
+
+context('Autobahn Sign Up Page : Test Password Field', () => {
+  beforeEach(() => {
+    cy.visit('https://autobahn.security/signup')
+  })
+
+  it('Verify Password is Weak Case 1 : '+data.credentials.password_weak_1.password, function() {
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_weak_1.email); // dummy
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_weak_1.password);
+    cy.get('.double-columns > :nth-child(1)').should('have.class','');              // at least 8 character
+    cy.get('.double-columns > :nth-child(2)').should('have.class','');              // one uppercase letter
+    cy.get('.double-columns > :nth-child(3)').should('have.class', 'is-fulfilled'); // one lower case letter
+    cy.get('.double-columns > :nth-child(4)').should('have.class','');              // one number
+    cy.get('.double-columns > :nth-child(5)').should('have.class','');              // one special character
+    cy.get('.double-columns > :nth-child(6)').should('have.class', 'is-fulfilled'); // no empty space
+    cy.get('.bar-text').should('have.text', 'Weak');
+    cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+  });
+
+  it('Verify Password is Weak Case 2 : '+data.credentials.password_weak_2.password, function() {
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_weak_2.email); // dummy
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_weak_2.password);
+    cy.get('.double-columns > :nth-child(1)').should('have.class', 'is-fulfilled'); // at least 8 character
+    cy.get('.double-columns > :nth-child(2)').should('have.class', 'is-fulfilled'); // one uppercase letter
+    cy.get('.double-columns > :nth-child(3)').should('have.class', 'is-fulfilled'); // one lower case letter
+    cy.get('.double-columns > :nth-child(4)').should('have.class','');              // one number
+    cy.get('.double-columns > :nth-child(5)').should('have.class', 'is-fulfilled'); // one special character
+    cy.get('.double-columns > :nth-child(6)').should('have.class', 'is-fulfilled'); // no empty space
+    cy.get('.bar-text').should('have.text', 'Weak');
+    cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+  });
+
+  it('Verify Password is Average Case 1 : '+data.credentials.password_avg_1.password, function() {
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_avg_1.email); // dummy
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_avg_1.password);
+    cy.get('.double-columns > :nth-child(1)').should('not.exist'); // at least 8 character
+    cy.get('.double-columns > :nth-child(2)').should('not.exist'); // one uppercase letter
+    cy.get('.double-columns > :nth-child(3)').should('not.exist'); // one lower case letter
+    cy.get('.double-columns > :nth-child(4)').should('not.exist'); // one number
+    cy.get('.double-columns > :nth-child(5)').should('not.exist'); // one special character
+    cy.get('.double-columns > :nth-child(6)').should('not.exist'); // no empty space
+    cy.get('.feedback-suggestion > ul > li').should('have.text', '\n                        Add another word or two. Uncommon words are better.\n                ');
+    cy.get('.bar-text').should('have.text', 'Average');
+    cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+  });
+  
+  it('Verify Password is Average Case 2 : '+data.credentials.password_avg_2.password, function() {
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_avg_2.email); // dummy
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_avg_2.password);
+    cy.get('.double-columns > :nth-child(1)').should('have.class', 'is-fulfilled'); // at least 8 character
+    cy.get('.double-columns > :nth-child(2)').should('have.class', 'is-fulfilled'); // one uppercase letter
+    cy.get('.double-columns > :nth-child(3)').should('have.class', 'is-fulfilled'); // one lower case letter
+    cy.get('.double-columns > :nth-child(4)').should('have.class', 'is-fulfilled'); // one number
+    cy.get('.double-columns > :nth-child(5)').should('have.class', 'is-fulfilled'); // one special character
+    cy.get('.double-columns > :nth-child(6)').should('have.class','');                 // no empty space
+    cy.get('.bar-text').should('have.text', 'Average');
+    cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+  });
+
+  it('Verify Password is Strong : '+data.credentials.password_strong.password, function() {
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_strong.email); // dummy
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_strong.password);
+    cy.get('.double-columns > :nth-child(1)').should('not.exist'); // at least 8 character
+    cy.get('.double-columns > :nth-child(2)').should('not.exist'); // one uppercase letter
+    cy.get('.double-columns > :nth-child(3)').should('not.exist'); // one lower case letter
+    cy.get('.double-columns > :nth-child(4)').should('not.exist'); // one number
+    cy.get('.double-columns > :nth-child(5)').should('not.exist'); // one special character
+    cy.get('.double-columns > :nth-child(6)').should('not.exist'); // no empty space
+    cy.get('.bar-text').should('have.text', 'Strong');
+    cy.get('.button-wrapper > .custom-button > .btn > .button-text').should('be.visible');
+  });
+
+  it('Verify Password is Very Strong : '+data.credentials.password_very_strong.password, function() {
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_very_strong.email); // dummy
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_very_strong.password);
+    cy.get('.double-columns > :nth-child(1)').should('not.exist'); // at least 8 character
+    cy.get('.double-columns > :nth-child(2)').should('not.exist'); // one uppercase letter
+    cy.get('.double-columns > :nth-child(3)').should('not.exist'); // one lower case letter
+    cy.get('.double-columns > :nth-child(4)').should('not.exist'); // one number
+    cy.get('.double-columns > :nth-child(5)').should('not.exist'); // one special character
+    cy.get('.double-columns > :nth-child(6)').should('not.exist'); // no empty space
+    cy.get('.bar-text').should('have.text', 'Very Strong');
+    cy.get('.button-wrapper > .custom-button > .btn > .button-text').should('be.visible');
+  });
+  
+  it('Verify Password Must be Valid : Wrong Password', function() { // Potential Bug : Wrong Warning Message!
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_wrong.email);
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_wrong.password);
+    cy.get('.button-wrapper > .custom-button > .btn > .button-text').click();
+    cy.get('.error > .label', { timeout: 20000 }).should('have.text', 'Account already exists.'); // Expected Wrong Password
+    cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+  });
+
+  it('Verify Password Must be Valid : Case Sensitive', function() { // Potential Bug : Wrong Warning Message!
+    cy.get('.form-group > .active').click();
+    cy.get('.form-group > .active').type(data.credentials.password_case_sensitive.email);
+    cy.get('.input-group-icon > .form-control').click();
+    cy.get('.input-group-icon > .form-control').type(data.credentials.password_case_sensitive.password);
+    cy.get('.button-wrapper > .custom-button > .btn > .button-text').click();
+    cy.get('.error > .label', { timeout: 20000 }).should('have.text', 'Account already exists.'); // Expected Wrong Password
+    cy.get('.button-wrapper > .custom-button > .btn.primary.button-large.unclickable.disabled').should('be.visible');
+  });
+
+})
